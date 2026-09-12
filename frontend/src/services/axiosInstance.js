@@ -8,7 +8,7 @@ import axios from 'axios';
  * - Response interceptor handles global 401 redirects.
  */
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
