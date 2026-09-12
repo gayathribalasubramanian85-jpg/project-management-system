@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment files — never commit real secrets
+.env
+*.env.local
+
+# Build output
+dist/
+build/
+
+# Prisma generated
+backend/prisma/generated/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
