@@ -6,8 +6,8 @@ A full-stack project and task management application built as a technical assess
 
 ## Live Demo
 
-> Frontend: _add Vercel URL after deployment_
-> Backend API: _add Railway URL after deployment_
+- **Frontend:** https://project-management-system-gamma-brown.vercel.app
+- **Backend API:** https://project-management-system-1mys.onrender.com
 
 ---
 
