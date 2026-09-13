@@ -3,11 +3,12 @@ import { sendSuccess, sendError } from '../utils/response.js';
 import { env } from '../config/env.js';
 
 /** Cookie options — httpOnly prevents JS access (XSS mitigation) */
+const isProduction = env.nodeEnv === 'production';
 const cookieOptions = {
   httpOnly: true,
-  secure: env.nodeEnv === 'production',  // HTTPS only in prod
-  sameSite: 'strict',
-  maxAge: 7 * 24 * 60 * 60 * 1000,      // 7 days in ms
+  secure: isProduction,           // HTTPS only in prod
+  sameSite: isProduction ? 'none' : 'strict', // 'none' required for cross-domain cookies
+  maxAge: 7 * 24 * 60 * 60 * 1000,            // 7 days in ms
 };
 
 /**
@@ -47,8 +48,8 @@ export const login = async (req, res, next) => {
 export const logout = (_req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: env.nodeEnv === 'production',
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'strict',
   });
   return sendSuccess(res, 200, 'Logged out successfully.');
 };
