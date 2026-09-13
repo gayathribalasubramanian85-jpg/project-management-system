@@ -12,6 +12,9 @@ import apiRoutes from './routes/index.js';
 
 const app = express();
 
+// ─── Trust proxy (required on Render/Heroku/Railway behind a load balancer) ───
+app.set('trust proxy', 1);
+
 // ─── Security headers ──────────────────────────────────────────────────────────
 app.use(helmet());
 
