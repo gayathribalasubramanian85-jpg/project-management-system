@@ -16,9 +16,18 @@ const app = express();
 app.use(helmet());
 
 // ─── CORS ──────────────────────────────────────────────────────────────────────
+// CLIENT_URL can be a comma-separated list of allowed origins, e.g.:
+//   CLIENT_URL=https://your-app.vercel.app,http://localhost:5173
+const allowedOrigins = env.clientUrl.split(',').map((o) => o.trim());
+
 app.use(
   cors({
-    origin: env.clientUrl,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. server-to-server, curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS: origin '${origin}' is not allowed`));
+    },
     credentials: true, // Allow cookies to be sent cross-origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
